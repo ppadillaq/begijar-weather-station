@@ -7,6 +7,8 @@ const PORT = 3000
 // Required to parse JSON from POST requests
 app.use(express.json());
 
+app.set("view engine", "ejs");
+
 // Variable to store the last value sent by the ESP
 let lastValue = null;
 
@@ -21,11 +23,12 @@ app.post("/esp", (req, res) => {
 
 // Root route that displays the last received value
 app.get("/", (req, res) => {
-    if (lastValue === null) {
+    res.render("index", { lastValue });
+/*     if (lastValue === null) {
         res.send("Aún no se ha recibido ningún valor del ESP8266.");
     } else {
         res.send(`El valor recibido es: ${lastValue}`);
-    }
+    } */
 });
 
 app.listen(PORT, () => {
